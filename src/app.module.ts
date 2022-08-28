@@ -13,6 +13,7 @@ import { config as databaseConfig } from './config/database.config';
 
 import { UserModule } from './user';
 import { AuthModule } from './auth';
+import { TodoModule } from './todo';
 
 import * as entities from './entity';
 
@@ -76,7 +77,8 @@ import * as entities from './entity';
       })
     }),
     UserModule,
-    AuthModule
+    AuthModule,
+    TodoModule
   ]
 })
 export class AppModule {}
