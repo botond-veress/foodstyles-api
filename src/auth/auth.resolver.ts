@@ -56,7 +56,7 @@ export class AuthResolver {
   async signUp(
     @Args('name') name: string,
     @Args('email', { type: () => EmailScalar }) email: string,
-    @Args('password') password: string
+    @Args('password', { type: () => PasswordScalar }) password: string
   ): Promise<AuthToken> {
     return this.authService.signUp({ name, email, password });
   }
