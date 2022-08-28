@@ -22,9 +22,9 @@ export class TodoItem {
   @Column({ length: 512 })
   title!: string;
 
-  @Column({ nullable: true })
+  @Column({ type: 'datetime', nullable: true })
   @Index()
-  completedAt?: Date;
+  completedAt!: Date | null;
 
   @CreateDateColumn()
   createdAt!: Date;

@@ -62,10 +62,10 @@ export class TodoResolver {
     return this.todoService.update(meId, { id: +id, title, completed }).then(this.convert.bind(this));
   }
 
-  @Mutation(() => ID)
+  @Mutation(() => Boolean)
   @UseGuards(GraphqlJwtGuard)
-  async deleteTodo(@MeId() meId: number, @Args('id', { type: () => ID }) id: string): Promise<string> {
+  async deleteTodo(@MeId() meId: number, @Args('id', { type: () => ID }) id: string): Promise<boolean> {
     await this.todoService.delete(meId, +id);
-    return id;
+    return true;
   }
 }

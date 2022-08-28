@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { IsNull, Not, Repository, SelectQueryBuilder } from 'typeorm';
 
 import { TodoItem } from '../entity';
 
@@ -51,26 +51,20 @@ export class TodoService {
   }
 
   async find(userId: number, completed?: boolean) {
-    return (
-      this.todoRepository
-        .createQueryBuilder('t')
-        .where({
-          userId,
-          ...this.getCompleted(completed)
-        })
-        // Not completed items first
-        .orderBy('t.completedAt IS NOT NULL')
-        // Most recently completed at top
-        .addOrderBy('t.completedAt', 'DESC')
-        // Most recently created at top
-        .addOrderBy('t.createdAt', 'DESC')
-        .getMany()
-    );
+    return this.filterByCompleted(this.todoRepository.createQueryBuilder('t').where({ userId }), completed)
+      .orderBy('t.createdAt', 'ASC')
+      .getMany();
+  }
+
+  private filterByCompleted(qb: SelectQueryBuilder<TodoItem>, completed?: boolean) {
+    if (completed == undefined) return qb;
+    if (completed) return qb.andWhere({ completedAt: Not(IsNull()) });
+    return qb.andWhere({ completedAt: IsNull() });
   }
 
   private getCompleted(completed?: boolean) {
     if (completed == undefined) return {};
 
-    return { completedAt: completed ? new Date() : undefined };
+    return { completedAt: completed ? new Date() : null };
   }
 }
