@@ -58,6 +58,10 @@ export class AuthService {
     return this.createToken(token.userId, token.id);
   }
 
+  async logout(refreshToken: string) {
+    await this.refreshTokenService.invalidateById(refreshToken);
+  }
+
   private async createToken(userId: number, token?: string) {
     const [accessToken, refreshToken] = await Promise.all([
       this.createAccessToken(userId),

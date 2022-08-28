@@ -65,4 +65,10 @@ export class AuthResolver {
   async refreshAccessToken(@Args('refreshToken') refreshToken: string): Promise<AuthToken> {
     return this.authService.renewToken(refreshToken);
   }
+
+  @Mutation(() => Boolean)
+  async logout(@Args('refreshToken') refreshToken: string): Promise<boolean> {
+    await this.authService.logout(refreshToken);
+    return true;
+  }
 }
