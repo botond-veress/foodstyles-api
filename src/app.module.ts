@@ -11,6 +11,9 @@ import { config as sentryConfig } from './config/sentry.config';
 import { config as loggerConfig } from './config/logger.config';
 import { config as databaseConfig } from './config/database.config';
 
+import { UserModule } from './user';
+import * as entities from './entity';
+
 @Module({
   imports: [
     ConfigModule.forRoot({ load: [appConfig] }),
@@ -57,8 +60,8 @@ import { config as databaseConfig } from './config/database.config';
       useFactory: (database: ConfigType<typeof databaseConfig>) => ({
         type: 'mysql',
         url: database.uri,
-        entities: [],
-        synchronize: true
+        entities: Object.values(entities),
+        synchronize: false
       })
     }),
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
@@ -69,7 +72,8 @@ import { config as databaseConfig } from './config/database.config';
         autoSchemaFile: true,
         playground: app.environment !== Environment.Production
       })
-    })
+    }),
+    UserModule
   ]
 })
 export class AppModule {}
