@@ -12,6 +12,8 @@ import { config as loggerConfig } from './config/logger.config';
 import { config as databaseConfig } from './config/database.config';
 
 import { UserModule } from './user';
+import { AuthModule } from './auth';
+
 import * as entities from './entity';
 
 @Module({
@@ -73,7 +75,8 @@ import * as entities from './entity';
         playground: app.environment !== Environment.Production
       })
     }),
-    UserModule
+    UserModule,
+    AuthModule
   ]
 })
 export class AppModule {}
