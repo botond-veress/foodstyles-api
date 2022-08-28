@@ -2,10 +2,12 @@ import { Module, RequestMethod } from '@nestjs/common';
 import { ConfigModule, ConfigType } from '@nestjs/config';
 import { SentryModule, SentryService } from '@ntegral/nestjs-sentry';
 import { LoggerModule } from 'nestjs-pino';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { config as appConfig } from './config/app.config';
 import { config as sentryConfig } from './config/sentry.config';
 import { config as loggerConfig } from './config/logger.config';
+import { config as databaseConfig } from './config/database.config';
 
 @Module({
   imports: [
@@ -45,6 +47,16 @@ import { config as loggerConfig } from './config/logger.config';
             paths: ['req.headers.authorization']
           }
         }
+      })
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule.forRoot({ load: [databaseConfig] })],
+      inject: [databaseConfig.KEY],
+      useFactory: (database: ConfigType<typeof databaseConfig>) => ({
+        type: 'mysql',
+        url: database.uri,
+        entities: [],
+        synchronize: true
       })
     })
   ]

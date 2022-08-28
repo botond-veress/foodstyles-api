@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+  database:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: foodstyles
+      MYSQL_USER: jma_FKY6vfa9unj0rfj
+      MYSQL_PASSWORD: mwQMP378g6tHbK_V64jK
+      MYSQL_ROOT_PASSWORD: grg_hfq5num8eva_HXB
+    ports:
+      - 3307:3306
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - .data:/var/lib/mysql
