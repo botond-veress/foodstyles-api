@@ -18,13 +18,17 @@
     "migration:generate": "npx ts-node node_modules/.bin/typeorm migration:generate -d ormconfig.ts"
   },
   "dependencies": {
+    "@nestjs/apollo": "^10.0.22",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.0.0",
+    "@nestjs/graphql": "^10.0.22",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/typeorm": "^9.0.1",
     "@ntegral/nestjs-sentry": "^3.0.7",
     "@sentry/node": "^7.11.1",
+    "apollo-server-express": "^3.10.2",
+    "graphql": "^16.6.0",
     "mysql2": "^2.3.3",
     "nestjs-pino": "^3.1.1",
     "pino-http": "^8.2.0",

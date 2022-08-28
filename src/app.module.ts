@@ -3,8 +3,10 @@ import { ConfigModule, ConfigType } from '@nestjs/config';
 import { SentryModule, SentryService } from '@ntegral/nestjs-sentry';
 import { LoggerModule } from 'nestjs-pino';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
-import { config as appConfig } from './config/app.config';
+import { config as appConfig, Environment } from './config/app.config';
 import { config as sentryConfig } from './config/sentry.config';
 import { config as loggerConfig } from './config/logger.config';
 import { config as databaseConfig } from './config/database.config';
@@ -57,6 +59,15 @@ import { config as databaseConfig } from './config/database.config';
         url: database.uri,
         entities: [],
         synchronize: true
+      })
+    }),
+    GraphQLModule.forRootAsync<ApolloDriverConfig>({
+      imports: [ConfigModule.forRoot({ load: [appConfig] })],
+      inject: [appConfig.KEY],
+      driver: ApolloDriver,
+      useFactory: (app: ConfigType<typeof appConfig>) => ({
+        autoSchemaFile: true,
+        playground: app.environment !== Environment.Production
       })
     })
   ]
