@@ -12,6 +12,7 @@ import { config as loggerConfig } from './config/logger.config';
 import { config as databaseConfig } from './config/database.config';
 
 import { UserModule } from './user';
+import { RefreshTokenModule } from './refresh-token';
 import { AuthModule } from './auth';
 import { TodoModule } from './todo';
 
@@ -77,6 +78,7 @@ import * as entities from './entity';
       })
     }),
     UserModule,
+    RefreshTokenModule,
     AuthModule,
     TodoModule
   ]
