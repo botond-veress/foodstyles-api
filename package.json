@@ -15,9 +15,9 @@
     "start:prod": "node dist/main",
     "lint": "eslint \"src/**/*.ts\" --fix",
     "migration:format": "prettier --write \"migrations/*.ts\"",
-    "migration:create": "typeorm migration:create && yarn migration:format",
-    "migration:generate": "npx ts-node node_modules/.bin/typeorm migration:generate -d ormconfig.ts && yarn migration:format",
-    "migration:run": "npx ts-node node_modules/.bin/typeorm migration:run -d ormconfig.ts && yarn migration:format"
+    "migration:create": "typeorm migration:create",
+    "migration:generate": "npx ts-node node_modules/.bin/typeorm migration:generate -d ormconfig.ts",
+    "migration:run": "npx ts-node node_modules/.bin/typeorm migration:run -d ormconfig.ts"
   },
   "dependencies": {
     "@nestjs/apollo": "^10.0.22",
