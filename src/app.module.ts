@@ -1,4 +1,9 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 
-@Module({})
+import { config as appConfig } from './config/app.config';
+
+@Module({
+  imports: [ConfigModule.forRoot({ load: [appConfig] })]
+})
 export class AppModule {}
